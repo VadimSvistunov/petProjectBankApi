@@ -5,7 +5,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Component
-public class NbrbHelper<A> {
+public class NbrbHelper {
     private final String NBRB_API = "https://api.nbrb.by/exrates/rates/";
     private final int PERIODICITY_PARAM = 0;
     private final int PARAMMODE_PARAM = 2;

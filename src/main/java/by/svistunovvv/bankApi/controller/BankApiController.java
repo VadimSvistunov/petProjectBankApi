@@ -20,6 +20,9 @@ public class BankApiController {
     @GetMapping("/preload")
     public String preload(@RequestParam String date) {
         String response = nbrbHelper.getData(date, "");
+        if (response == null) {
+            return "Something went wrong";
+        }
         List<Rate> rates = rateConverter.convertArray(response);
         rateService.saveAll(rates);
         return "Success preload rates";
@@ -33,9 +36,12 @@ public class BankApiController {
         Rate rate = rateService.findRateByCurrencyAndDate(currencyCode.toLowerCase(), date);
         if (rate == null) {
             String response = nbrbHelper.getData(date, currencyCode);
+            if (response == null) {
+                return "Something went wrong";
+            }
             rate = rateConverter.convertRate(response);
             rateService.save(rate);
         }
-        return rate.getDate() + " за " + rate.getScale() + " " + rate.getName() + " надо было отдать " + rate.getOfficialRate() + "рублей";
+        return rate.getDate() + " за " + rate.getScale() + " " + rate.getName() + " надо было отдать " + rate.getOfficialRate() + " рублей";
     }
 }
